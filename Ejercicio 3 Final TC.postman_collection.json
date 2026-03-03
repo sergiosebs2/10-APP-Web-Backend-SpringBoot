@@ -1,0 +1,207 @@
+{
+  "info": {
+    "_postman_id": "35c959bc-58d0-433f-b2dd-1e7d7561f589",
+    "name": "Ejercicio 3 Final TC",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "50212775",
+    "_collection_link": "https://go.postman.co/collection/50212775-35c959bc-58d0-433f-b2dd-1e7d7561f589?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "ClienteCrear",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"nombre\": \"Sergio\",\r\n    \"apellido\" : \"Sanchez\",\r\n    \"dni\" : 789456,\r\n    \"celular\":123456\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/cliente/crear",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "cliente",
+            "crear"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "ClienteTraer",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/cliente/traer",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "cliente",
+            "traer"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "ProductoCrear",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"nombre\": \"Sergio\",\r\n    \"apellido\" : \"Sanchez\",\r\n    \"dni\" : 789456,\r\n    \"celular\":123456\r\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/producto/crear",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "producto",
+            "crear"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "ProductoTraer",
+      "request": {
+        "method": "GET",
+        "header": []
+      },
+      "response": []
+    },
+    {
+      "name": "VentaCrear",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"fecha_venta\": \"2026-02-24\",\r\n  \"total\": 4000,\r\n  \"listaDetalleItemDTO\": [\r\n    {   \r\n        \"cantidad\" : 1,\r\n        \"precio_unitario\": 3000,\r\n        \"nombre_producto\": \"Gaseosa\"      \r\n    },\r\n    {\r\n      \"cantidad\" : 1,\r\n        \"precio_unitario\": 1000,\r\n        \"nombre_producto\": \"Polenta\"    \r\n    }\r\n    ,{\r\n      \"cantidad\" : 1,\r\n        \"precio_unitario\": 4000,\r\n        \"nombre_producto\": \"Fideos\"    \r\n    }\r\n  ],\r\n  \"id_cliente\":2\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/venta/crear",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "venta",
+            "crear"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "VentaTraer",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/venta/traer",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "venta",
+            "traer"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "ProductoTraerxCantidad",
+      "request": {
+        "method": "GET",
+        "header": []
+      },
+      "response": []
+    },
+    {
+      "name": "TraerDetalleVentaPorID",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/traerDetalles/1",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "traerDetalles",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "EstadisticaDia",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/venta/estadistica?fecha=2026-02-24",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "venta",
+            "estadistica"
+          ],
+          "query": [
+            {
+              "key": "fecha",
+              "value": "2026-02-24",
+              "type": "text"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "MayorVenta",
+      "request": {
+        "method": "GET",
+        "header": []
+      },
+      "response": []
+    }
+  ]
+}
