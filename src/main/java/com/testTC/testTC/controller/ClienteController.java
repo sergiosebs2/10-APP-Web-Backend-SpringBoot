@@ -2,6 +2,8 @@ package com.testTC.testTC.controller;
 
 import com.testTC.testTC.dto.ClienteDTO;
 import com.testTC.testTC.service.ClienteService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,12 +11,14 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Tag(name ="Endpoints de Cliente", description = "Gestion de los clientes asociados.")
 @RestController
 @RequestMapping("/cliente")
 public class ClienteController {
     @Autowired
     ClienteService serviceCliente;
 
+    @Operation(summary = "Trae todos los clientes asociados")
     @PostMapping("/crear")
     public ResponseEntity<ClienteDTO> crear(@RequestBody ClienteDTO clienteDTO){
         ClienteDTO creado = serviceCliente.crear(clienteDTO);
