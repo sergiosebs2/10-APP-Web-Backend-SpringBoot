@@ -8,7 +8,7 @@ API REST para la gestión de un bazar, que permite administrar productos, client
 ![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white)
 ![Spring Boot](https://img.shields.io/badge/springboot-%236DB33F.svg?style=for-the-badge&logo=springboot&logoColor=white)
 ![Hibernate](https://img.shields.io/badge/Hibernate-59666C?style=for-the-badge&logo=Hibernate&logoColor=white)
-![H2](https://img.shields.io/badge/H2-004088?style=for-the-badge&logo=h2&logoColor=white)
+![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
 
 ## 📐 Arquitectura
 ```
@@ -19,6 +19,7 @@ model/        → Entidades (Producto, Venta, Cliente)
 dto/          → Patrón DTO para respuestas específicas
 mapper/       → Conversión entre entidades y DTOs
 exception/    → Manejo de excepciones personalizadas
+swagger/      → Configuracion del archivo de documentacion de la API
 ```
 
 ## 📦 Modelos
@@ -66,8 +67,10 @@ exception/    → Manejo de excepciones personalizadas
 2. Abrilo en IntelliJ IDEA o tu IDE favorito
 3. Ejecutá la clase `TestTcApplication`
 4. La API corre en `http://localhost:8080`
-5. La consola H2 está disponible en `http://localhost:8080/h2-console`
 
 ## 🧪 Colección Postman
 
 Incluida en el repositorio como `bazar-collection.json`. Importala en Postman para probar todos los endpoints.
+
+## 📄 Documentación API
+Podés importar el archivo [api-docs.json](./api-docs.json) en Postman o Swagger Editor para explorar los endpoints.
