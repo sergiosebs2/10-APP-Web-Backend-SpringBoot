@@ -1,5 +1,6 @@
 package com.testTC.testTC.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 import org.springframework.data.repository.NoRepositoryBean;
 
@@ -12,6 +13,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Schema(description = "DTO de la entidad Venta")
 
 public class VentaDTO {
     private LocalDate fecha_venta;

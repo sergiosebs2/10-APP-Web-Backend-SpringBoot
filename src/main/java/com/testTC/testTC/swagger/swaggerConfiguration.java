@@ -7,9 +7,9 @@ import org.springframework.context.annotation.Configuration;
 
 @OpenAPIDefinition(
         info = @Info(
-                title = "API Grosery Store",
+                title = "API BAZAR S.A.",
                 version = "1.0.0",
-                description = "API creada para gestión backend de comercio."
+                description = "API creada para gestión backend de comercio, con fines formativos."
         )
 )
 @Configuration

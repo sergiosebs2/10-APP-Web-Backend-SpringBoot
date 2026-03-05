@@ -18,24 +18,28 @@ public class ClienteController {
     @Autowired
     ClienteService serviceCliente;
 
-    @Operation(summary = "Trae todos los clientes asociados")
+    @Operation(summary = "Crea un nuevo cliente asociado")
     @PostMapping("/crear")
     public ResponseEntity<ClienteDTO> crear(@RequestBody ClienteDTO clienteDTO){
         ClienteDTO creado = serviceCliente.crear(clienteDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(creado);
     }
 
+
     @GetMapping("/traer")
+    @Operation(summary = "Trae todos los clientes asociados")
     public ResponseEntity<List<ClienteDTO>> listar(){
         return ResponseEntity.ok(serviceCliente.listar());
     }
 
     @PutMapping("/modificar/{id}")
+    @Operation(summary = "Modifica clientes asociados a partir del numero de Id")
     public ResponseEntity<ClienteDTO> modificar (@PathVariable Long id, @RequestParam ClienteDTO clienteDTO){
         return ResponseEntity.ok(serviceCliente.modificar(id, clienteDTO));
     }
 
     @DeleteMapping("/borrar/{id}")
+    @Operation(summary = "Elimina algun cliente asociado de acuerdo a un numero de Id")
     public ResponseEntity<Void> borrar(@PathVariable Long id){
         serviceCliente.eliminar(id);
         return ResponseEntity.noContent().build();
