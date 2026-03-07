@@ -52,7 +52,7 @@ public class ProductoService implements IProductoService {
     @Override
     public List<ProductoDTO> filtrarXcantidad(Double cantidad) {
         List<Producto> listaProductos = repoProducto.findByCantidadDisponibleLessThan(cantidad);
-        if(listaProductos.isEmpty()) throw new ResourceNotFoundException("Producto");
+        if(listaProductos.isEmpty()) throw new ResourceNotFoundException("productos con esa cantidad.");
         return listaProductos.stream().map(Mapper::deProductoaDTO).toList();
     }
 }

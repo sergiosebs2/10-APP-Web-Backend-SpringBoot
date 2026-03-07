@@ -4,6 +4,7 @@ import com.testTC.testTC.dto.DetalleDTO;
 import com.testTC.testTC.dto.MayorVentaDTO;
 import com.testTC.testTC.dto.ResumendiaDTO;
 import com.testTC.testTC.dto.VentaDTO;
+import com.testTC.testTC.exception.BussinesException;
 import com.testTC.testTC.exception.ResourceNotFoundException;
 import com.testTC.testTC.mapper.Mapper;
 import com.testTC.testTC.model.DetalleItemVenta;
@@ -38,8 +39,8 @@ public class VentaService implements IVentaService{
                     //Chequeo que exista el producto
                     Producto producto = repoProducto.findByNombre(det.getNombre_producto())
                             .orElseThrow(()-> new ResourceNotFoundException("Producto", "nombre", det.getNombre_producto()));
-
-                    return DetalleItemVenta.builder()
+                    //Chequeo stock disponible
+                    if(producto.getCantidadDisponible() < det.getCantidad()) throw new BussinesException("Stock insuficiente para el producto: " + producto.getNombre());                    return DetalleItemVenta.builder()
                             .cantidad(det.getCantidad())
                             .precio_unitario(det.getPrecio_unitario())
                             .producto(producto)

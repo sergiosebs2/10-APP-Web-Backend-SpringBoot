@@ -12,14 +12,14 @@ public class ResourceNotFoundException extends RuntimeException {
 
 
     public ResourceNotFoundException(String nombreEntidad, String nombreCampoEntidad, Object valorAtributo) {
-        super(String.format("El campo %s no posee un %s con valor = '%s' ", nombreEntidad, nombreCampoEntidad,valorAtributo));
+        super(String.format("[404 Not Found] - El campo %s no posee un %s con valor = '%s' ", nombreEntidad, nombreCampoEntidad,valorAtributo));
         this.nombreEntidad = nombreEntidad;
         this.nombreCampoEntidad = nombreCampoEntidad;
         this.valorAtributo = valorAtributo;
 
     }
     public ResourceNotFoundException (String nombreEntidad){
-        super(String.format("El sistema no posee registros para %s", nombreEntidad));
+        super(String.format("[404 Not Found] - El sistema no posee registros para %s", nombreEntidad));
         this.nombreEntidad = nombreEntidad;
     }
 }

@@ -18,8 +18,10 @@ repository/   → Acceso a datos con JPA
 model/        → Entidades (Producto, Venta, Cliente)
 dto/          → Patrón DTO para respuestas específicas
 mapper/       → Conversión entre entidades y DTOs
-exception/    → Manejo de excepciones personalizadas
+exception/    → Manejo de excepciones personalizadas y del framework
 swagger/      → Configuracion del archivo de documentacion de la API
+payload/      → Formato de la respuesta cuando se lanzan excepciones
+
 ```
 
 ## 📦 Modelos
@@ -74,3 +76,25 @@ Incluida en el repositorio como `bazar-collection.json`. Importala en Postman pa
 
 ## 📄 Documentación API
 Podés importar el archivo [api-docs.json](./api-docs.json) en Postman o Swagger Editor para explorar los endpoints.
+
+
+## ⚠️ Manejo de Errores
+
+Todos los errores de la API devuelven la siguiente estructura:
+```json
+{
+  "detalleTiempo": "2026-03-07T14:54:51",
+  "descripcion": "Mensaje descriptivo del error",
+  "url": "/endpoint/afectado"
+}
+```
+
+| Código | Excepción | Descripción |
+|--------|-----------|-------------|
+| 404 | ResourceNotFoundException | Recurso no encontrado en la base de datos |
+| 400 | BusinessException | Violación de regla de negocio |
+| 400 | HttpMessageNotReadableException | JSON del body mal formado |
+| 400 | MethodArgumentNotValidException | Campos vacíos o inválidos según @Valid |
+| 404 | NoHandlerFoundException | Endpoint inexistente |
+| 409 | DataIntegrityViolationException | Dato duplicado o violación de restricción en la DB |
+| 500 | Exception | Error inesperado del servidor |
