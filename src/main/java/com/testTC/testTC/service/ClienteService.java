@@ -16,7 +16,7 @@ public class ClienteService implements IClienteService {
     ClienteRepository repoCliente;
     @Override
     public ClienteDTO crear(ClienteDTO clienteDTO) {
-        if(clienteDTO == null) throw new ResourceNotFoundException("Debe ser valido");
+        //Si el cliente es null Spring lo cubre con las exceptions declaradas
         Cliente cliente = Cliente.builder()
                 .dni(clienteDTO.getDni())
                 .nombre(clienteDTO.getNombre())
@@ -27,22 +27,22 @@ public class ClienteService implements IClienteService {
 
     @Override
     public List<ClienteDTO> listar() {
+        if(repoCliente.findAll().isEmpty()) throw new ResourceNotFoundException("Cliente");
         return repoCliente.findAll().stream().map(Mapper::deClienteaDTO).toList();
     }
 
     @Override
     public void eliminar(Long id) {
         if (repoCliente.existsById(id)) repoCliente.deleteById(id);
-            else throw new ResourceNotFoundException("No existe en la BD");
+            else throw new ResourceNotFoundException("Cliente", "id", id);
     }
 
     @Override
     public ClienteDTO modificar(Long id, ClienteDTO clienteDTO) {
-       Cliente cliente = repoCliente.findById(id).orElseThrow(()->new ResourceNotFoundException("No existe en la BD"));
+       Cliente cliente = repoCliente.findById(id).orElseThrow(()->new ResourceNotFoundException("Cliente", "id", id));
         if (clienteDTO.getNombre()!=null) cliente.setNombre(clienteDTO.getNombre());
         if (clienteDTO.getApellido()!=null) cliente.setApellido(clienteDTO.getApellido());
         if (clienteDTO.getDni()!=null) cliente.setDni(clienteDTO.getDni());
         return Mapper.deClienteaDTO(repoCliente.save(cliente));
-
     }
 }

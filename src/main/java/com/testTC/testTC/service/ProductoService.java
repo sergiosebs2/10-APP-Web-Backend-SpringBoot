@@ -28,29 +28,31 @@ public class ProductoService implements IProductoService {
 
     @Override
     public List<ProductoDTO> listar() {
+        if(repoProducto.findAll().isEmpty()) throw new ResourceNotFoundException("Producto");
         return repoProducto.findAll().stream().map(Mapper::deProductoaDTO).toList();
     }
 
     @Override
     public void eliminar(Long id) {
         if (repoProducto.existsById(id)) repoProducto.deleteById(id);
-        else throw new ResourceNotFoundException("Id no existe en la base de datos");
+        else throw new ResourceNotFoundException("Producto", "id", id);;
     }
 
     @Override
     public ProductoDTO modificar(Long id, ProductoDTO productoDTO) {
-        Producto producto = repoProducto.findById(id).orElseThrow(() -> new ResourceNotFoundException("No existe en la BD"));
+        Producto producto = repoProducto.findById(id).orElseThrow(() -> new ResourceNotFoundException("Producto", "id", id));
         if (productoDTO.getNombre() != null) producto.setNombre(productoDTO.getNombre());
         if (productoDTO.getCosto() != null) producto.setCosto(productoDTO.getCosto());
         if (productoDTO.getMarca() != null) producto.setMarca(productoDTO.getMarca());
-        if (productoDTO.getCantidad_disponible() != null)
-            producto.setCantidadDisponible(productoDTO.getCantidad_disponible());
+        if (productoDTO.getCantidad_disponible() != null) producto.setCantidadDisponible(productoDTO.getCantidad_disponible());
         return Mapper.deProductoaDTO(repoProducto.save(producto));
 
     }
 
     @Override
     public List<ProductoDTO> filtrarXcantidad(Double cantidad) {
-       return repoProducto.findByCantidadDisponibleLessThan(cantidad).stream().map(Mapper::deProductoaDTO).toList();
+        List<Producto> listaProductos = repoProducto.findByCantidadDisponibleLessThan(cantidad);
+        if(listaProductos.isEmpty()) throw new ResourceNotFoundException("Producto");
+        return listaProductos.stream().map(Mapper::deProductoaDTO).toList();
     }
 }

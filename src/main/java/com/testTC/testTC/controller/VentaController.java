@@ -38,7 +38,7 @@ public class VentaController {
     @GetMapping("/traerDetalles/{id}")
     @Operation(summary = "Trae la lista de detalles de una venta a partir de su número de Id")
     public ResponseEntity<List<DetalleDTO>> traerDetalles(@PathVariable Long id){
-        return ResponseEntity.ok(serviceVenta.traerporId(id));
+        return ResponseEntity.ok(serviceVenta.traerDetallesdeVentaxID(id));
     }
     @GetMapping("/estadistica")
     @Operation(summary = "Trae la estadistica de ventas del dia específicado")

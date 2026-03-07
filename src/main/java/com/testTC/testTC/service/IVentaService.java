@@ -9,8 +9,7 @@ public interface IVentaService {
     VentaDTO crear(VentaDTO ventaDTO);
     List<VentaDTO> listar();
     void eliminar(Long id);
-    VentaDTO modificar(Long id, VentaDTO ventaDTO);
-    List<DetalleDTO> traerporId (Long id);
+    List<DetalleDTO> traerDetallesdeVentaxID(Long id);
     ResumendiaDTO traerEstadisticaDia (LocalDate fecha);
     MayorVentaDTO traerMayorVenta();
 }

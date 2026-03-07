@@ -7,6 +7,7 @@ import com.testTC.testTC.dto.VentaDTO;
 import com.testTC.testTC.exception.ResourceNotFoundException;
 import com.testTC.testTC.mapper.Mapper;
 import com.testTC.testTC.model.DetalleItemVenta;
+import com.testTC.testTC.model.Producto;
 import com.testTC.testTC.model.Venta;
 import com.testTC.testTC.repository.ClienteRepository;
 import com.testTC.testTC.repository.ProductoRepository;
@@ -28,53 +29,54 @@ public class VentaService implements IVentaService{
 
     @Override
     public VentaDTO crear(VentaDTO ventaDTO) {
-        if(ventaDTO == null ) throw new ResourceNotFoundException("No existe ventaDTO");
-        //crear venta
         Venta venta = new Venta();
         venta.setFechaVenta(ventaDTO.getFecha_venta());
         venta.setTotal(ventaDTO.getTotal());
-        //asignar lista
-        venta.setListaDetalleItem(
-                ventaDTO.getListaDetalleItemDTO().stream().map(det->
-                        DetalleItemVenta.builder()
-                                .cantidad(det.getCantidad())
-                                .precio_unitario(det.getPrecio_unitario())
-                                .producto(repoProducto.findByNombre(det.getNombre_producto()))
-                                .venta(venta)
-                                .build()
-                ).toList()
-        );
 
-        //asignar cliente
-        venta.setUnCliente(repoCliente.findById(ventaDTO.getId_cliente()).orElseThrow(()->new ResourceNotFoundException("Cliente XX")));
+        venta.setListaDetalleItem(
+                ventaDTO.getListaDetalleItemDTO().stream().map(det -> {
+                    //Chequeo que exista el producto
+                    Producto producto = repoProducto.findByNombre(det.getNombre_producto())
+                            .orElseThrow(()-> new ResourceNotFoundException("Producto", "nombre", det.getNombre_producto()));
+
+                    return DetalleItemVenta.builder()
+                            .cantidad(det.getCantidad())
+                            .precio_unitario(det.getPrecio_unitario())
+                            .producto(producto)
+                            .venta(venta)
+                            .build();
+                }).toList()
+        );
+        //Chequeo que exista el cliente
+        venta.setUnCliente(repoCliente.findById(ventaDTO.getId_cliente())
+                .orElseThrow(() -> new ResourceNotFoundException("Cliente", "id", ventaDTO.getId_cliente())));
+
         return Mapper.deVentaaDTO(repoVenta.save(venta));
     }
 
     @Override
     public List<VentaDTO> listar() {
+        if(repoVenta.findAll().isEmpty()) throw new ResourceNotFoundException("Venta");
         return repoVenta.findAll().stream().map(Mapper::deVentaaDTO).toList();
     }
 
     @Override
     public void eliminar(Long id) {
         if(repoVenta.existsById(id)) repoVenta.deleteById(id);
-        else throw new ResourceNotFoundException("Id no existe en la BD");
+        else throw new ResourceNotFoundException("Venta", "id", id);
     }
 
     @Override
-    public VentaDTO modificar(Long id, VentaDTO ventaDTO) {
-        return null;
-    }
-
-    @Override
-    public List<DetalleDTO> traerporId(Long id) {
-        Venta venta = repoVenta.findById(id).orElseThrow(()->new ResourceNotFoundException("No existe el id"));
+    public List<DetalleDTO> traerDetallesdeVentaxID(Long id) {
+        Venta venta = repoVenta.findById(id).orElseThrow(()->new ResourceNotFoundException("Venta", "id", id));
         return venta.getListaDetalleItem().stream().map(Mapper::dedetalleaDTO).toList();
     }
 
     @Override
     public ResumendiaDTO traerEstadisticaDia(LocalDate fecha) {
         List<Venta> lista = repoVenta.findByFechaVenta(fecha);
+        if(lista.isEmpty()) throw new ResourceNotFoundException("Venta", "fecha", fecha);
+
         double montoTotal = lista.stream()
                 .mapToDouble(Venta::getTotal)
                 .sum();
@@ -86,7 +88,7 @@ public class VentaService implements IVentaService{
 
     @Override
     public MayorVentaDTO traerMayorVenta() {
-        Venta venta = repoVenta.findTopByOrderByTotalDesc();
+        Venta venta = repoVenta.findTopByOrderByTotalDesc().orElseThrow(()->new ResourceNotFoundException("Mayor venta, porque no existen ventas"));
         return MayorVentaDTO.builder()
                 .codigoVenta(venta.getCodigoVenta())
                 .nombre(venta.getUnCliente().getNombre())

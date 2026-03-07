@@ -5,8 +5,11 @@ package com.testTC.testTC.payload;
 
 
 
-import java.util.Date;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import java.util.Date;
+@Data @NoArgsConstructor
 public class ApiResponse {
     private Date tiempo = new Date();
     private String mensaje;
