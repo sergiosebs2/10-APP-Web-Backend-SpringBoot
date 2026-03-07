@@ -63,12 +63,6 @@ payload/      → Formato de la respuesta cuando se lanzan excepciones
 | PUT | `/ventas/editar/{codigo}` | Edita una venta |
 | DELETE | `/ventas/eliminar/{codigo}` | Elimina una venta |
 
-## ▶️ Cómo ejecutar el proyecto
-
-1. Cloná el repositorio
-2. Abrilo en IntelliJ IDEA o tu IDE favorito
-3. Ejecutá la clase `TestTcApplication`
-4. La API corre en `http://localhost:8080`
 
 ## 🧪 Colección Postman
 
@@ -78,7 +72,7 @@ Incluida en el repositorio como `bazar-collection.json`. Importala en Postman pa
 Podés importar el archivo [api-docs.json](./api-docs.json) en Postman o Swagger Editor para explorar los endpoints.
 
 
-## ⚠️ Manejo de Errores
+## ⚠️ Manejo de Errores con ExceptionHandler
 
 Todos los errores de la API devuelven la siguiente estructura:
 ```json
@@ -98,3 +92,11 @@ Todos los errores de la API devuelven la siguiente estructura:
 | 404 | NoHandlerFoundException | Endpoint inexistente |
 | 409 | DataIntegrityViolationException | Dato duplicado o violación de restricción en la DB |
 | 500 | Exception | Error inesperado del servidor |
+
+## ▶️ Cómo ejecutar el proyecto
+
+1. Cloná el repositorio
+2. Abrilo en IntelliJ IDEA o tu IDE favorito
+3. Ejecutá la clase `TestTcApplication`
+4. La API corre en `http://localhost:8080`
+
