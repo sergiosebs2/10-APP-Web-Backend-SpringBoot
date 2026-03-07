@@ -4,7 +4,7 @@ import com.testTC.testTC.dto.DetalleDTO;
 import com.testTC.testTC.dto.MayorVentaDTO;
 import com.testTC.testTC.dto.ResumendiaDTO;
 import com.testTC.testTC.dto.VentaDTO;
-import com.testTC.testTC.exception.ObjetoNoEncontrado;
+import com.testTC.testTC.exception.ResourceNotFoundException;
 import com.testTC.testTC.mapper.Mapper;
 import com.testTC.testTC.model.DetalleItemVenta;
 import com.testTC.testTC.model.Venta;
@@ -28,7 +28,7 @@ public class VentaService implements IVentaService{
 
     @Override
     public VentaDTO crear(VentaDTO ventaDTO) {
-        if(ventaDTO == null ) throw new ObjetoNoEncontrado("No existe ventaDTO");
+        if(ventaDTO == null ) throw new ResourceNotFoundException("No existe ventaDTO");
         //crear venta
         Venta venta = new Venta();
         venta.setFechaVenta(ventaDTO.getFecha_venta());
@@ -46,7 +46,7 @@ public class VentaService implements IVentaService{
         );
 
         //asignar cliente
-        venta.setUnCliente(repoCliente.findById(ventaDTO.getId_cliente()).orElseThrow(()->new ObjetoNoEncontrado("Cliente XX")));
+        venta.setUnCliente(repoCliente.findById(ventaDTO.getId_cliente()).orElseThrow(()->new ResourceNotFoundException("Cliente XX")));
         return Mapper.deVentaaDTO(repoVenta.save(venta));
     }
 
@@ -58,7 +58,7 @@ public class VentaService implements IVentaService{
     @Override
     public void eliminar(Long id) {
         if(repoVenta.existsById(id)) repoVenta.deleteById(id);
-        else throw new ObjetoNoEncontrado("Id no existe en la BD");
+        else throw new ResourceNotFoundException("Id no existe en la BD");
     }
 
     @Override
@@ -68,7 +68,7 @@ public class VentaService implements IVentaService{
 
     @Override
     public List<DetalleDTO> traerporId(Long id) {
-        Venta venta = repoVenta.findById(id).orElseThrow(()->new ObjetoNoEncontrado("No existe el id"));
+        Venta venta = repoVenta.findById(id).orElseThrow(()->new ResourceNotFoundException("No existe el id"));
         return venta.getListaDetalleItem().stream().map(Mapper::dedetalleaDTO).toList();
     }
 

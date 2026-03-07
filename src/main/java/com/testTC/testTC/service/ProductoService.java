@@ -1,7 +1,7 @@
 package com.testTC.testTC.service;
 
 import com.testTC.testTC.dto.ProductoDTO;
-import com.testTC.testTC.exception.ObjetoNoEncontrado;
+import com.testTC.testTC.exception.ResourceNotFoundException;
 import com.testTC.testTC.mapper.Mapper;
 import com.testTC.testTC.model.Producto;
 import com.testTC.testTC.repository.ProductoRepository;
@@ -34,12 +34,12 @@ public class ProductoService implements IProductoService {
     @Override
     public void eliminar(Long id) {
         if (repoProducto.existsById(id)) repoProducto.deleteById(id);
-        else throw new ObjetoNoEncontrado("Id no existe en la base de datos");
+        else throw new ResourceNotFoundException("Id no existe en la base de datos");
     }
 
     @Override
     public ProductoDTO modificar(Long id, ProductoDTO productoDTO) {
-        Producto producto = repoProducto.findById(id).orElseThrow(() -> new ObjetoNoEncontrado("No existe en la BD"));
+        Producto producto = repoProducto.findById(id).orElseThrow(() -> new ResourceNotFoundException("No existe en la BD"));
         if (productoDTO.getNombre() != null) producto.setNombre(productoDTO.getNombre());
         if (productoDTO.getCosto() != null) producto.setCosto(productoDTO.getCosto());
         if (productoDTO.getMarca() != null) producto.setMarca(productoDTO.getMarca());
